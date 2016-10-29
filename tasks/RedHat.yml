@@ -1,0 +1,19 @@
+---
+- name: install slack with yum or apt
+  action: "{{backcompat_pkg_mgr}} name=https://downloads.slack-edge.com/linux_releases/slack-2.2.1-0.1.fc21.x86_64.rpm"
+  sudo: yes
+  when: backcompat_pkg_mgr == "yum" or backcompat_pkg_mgr == "apt"
+
+# Handle dnf case for Fedora
+- name: "check if slack exists"
+  command: "rpm -q slack"
+  changed_when: False
+  ignore_errors: True
+  register: package_exists_result
+  when: package_names is defined and backcompat_pkg_mgr == "dnf"
+
+# Use command since dnf was only added as a module in ansible 1.9.0
+- name: install slack with dnf
+  command: dnf install -y https://downloads.slack-edge.com/linux_releases/slack-2.2.1-0.1.fc21.x86_64.rpm
+  sudo: yes
+  when: backcompat_pkg_mgr == "dnf" and package_exists_result|failed

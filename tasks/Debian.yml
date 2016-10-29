@@ -1,0 +1,39 @@
+---
+## Update APT configuration
+#- name: add universe repository
+#  register: universe_result
+#  sudo: yes
+#  apt_repository: >
+#    repo="deb http://archive.ubuntu.com/ubuntu {{ansible_lsb.codename|lower}} universe"
+#    state=present
+#
+## Download keys and package lists
+#- name: apt-get update
+#  apt: update_cache=yes cache_valid_time=0
+#  sudo: yes
+#  when: universe_result.changed
+
+- name: apt-get update
+  apt: update_cache=true cache_valid_time=0
+  sudo: yes
+
+- name: install gdebi
+  apt: name=gdebi
+  sudo: yes
+
+- name: Check if slack is installed
+  command: dpkg-query -W slack-desktop
+  register: check_slack
+  failed_when: false
+  changed_when: false
+
+- name: Download Ubuntu slack package
+  command: wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.2.1-amd64.deb
+  args:
+    creates: "/tmp/slack-desktop.deb"
+  when: check_slack.rc == 1
+
+- name: Install Ubuntu slack package
+  sudo: true
+  command: gdebi --non-interactive /tmp/slack-desktop.deb
+  when: check_slack.rc == 1
