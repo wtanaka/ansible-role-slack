@@ -1,20 +1,6 @@
 ---
-## Update APT configuration
-#- name: add universe repository
-#  register: universe_result
-#  sudo: yes
-#  apt_repository: >
-#    repo="deb http://archive.ubuntu.com/ubuntu {{ansible_lsb.codename|lower}} universe"
-#    state=present
-#
-## Download keys and package lists
-#- name: apt-get update
-#  apt: update_cache=yes cache_valid_time=0
-#  sudo: yes
-#  when: universe_result.changed
-
 - name: apt-get update
-  apt: update_cache=true cache_valid_time=0
+  apt: update_cache=true cache_valid_time=3600
   sudo: yes
 
 - name: install gdebi
