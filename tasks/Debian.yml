@@ -14,7 +14,7 @@
   changed_when: false
 
 - name: Download Ubuntu slack package
-  command: wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.2.1-amd64.deb
+  command: "wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-{{ slack_version }}-amd64.deb"
   args:
     creates: "/tmp/slack-desktop.deb"
   when: check_slack.rc == 1
