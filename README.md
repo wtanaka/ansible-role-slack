@@ -13,6 +13,14 @@ Example Playbook
       roles:
          - wtanaka.slack
 
+### `slack_version`
+
+The version of slack to install, e.g. `slack_version: 2.5.2`
+
+
+The full set of configuration options available are visible in
+[defaults/main.yml](defaults/main.yml)
+
 License
 -------
 
