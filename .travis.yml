@@ -10,8 +10,8 @@ services:
 script:
 - >
   wget -O- bit.ly/ansibletest | env
-  DOCKER_IMAGES="ubuntu:14.04 ubuntu:16.04 fedora:21
-  fedora:23 debian:8"
+  DOCKER_IMAGES="ubuntu:14.04 ubuntu:16.04 fedora:23
+  fedora:27 debian:8"
   ANSIBLE_VERSIONS="1.4.4 1.6.1 1.8.4 2.1.0.0" sh
 after_failure:
 - cat role-tester-ansible-master/.kitchen.yml
