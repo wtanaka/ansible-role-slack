@@ -14,12 +14,12 @@
   changed_when: false
 
 - name: Download Ubuntu slack package
-  command: "wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-{{ slack_version }}-amd64.deb"
+  command: "wget -O /tmp/slack-desktop-{{ slack_version }}-amd64.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-{{ slack_version }}-amd64.deb"
   args:
-    creates: "/tmp/slack-desktop.deb"
+    creates: "/tmp/slack-desktop-{{ slack_version }}-amd64.deb"
   when: check_slack.rc == 1
 
 - name: Install Ubuntu slack package
   sudo: true
-  command: gdebi --non-interactive /tmp/slack-desktop.deb
+  command: gdebi --non-interactive /tmp/slack-desktop-{{slack_version}}-amd64.deb
   when: check_slack.rc == 1
