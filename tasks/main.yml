@@ -1,10 +1,7 @@
 ---
-- include: compat.yml
+- name: set should_run fact
+  set_fact:
+    should_run: True
 
 - include: include_vars.yml
-
-- include: Debian.yml
-  when: ansible_os_family == 'Debian'
-
-- include: RedHat.yml
-  when: ansible_os_family == 'RedHat'
+- include: sudoorbecome.yml
